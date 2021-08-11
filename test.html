@@ -9,29 +9,15 @@
 <body>
 
     <script>
-function sayHi(){
-    console.log('Hello,', this.name);
+function timeout(ms) {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms, 'done');
+  });
 }
-var person1 = {
-    name: 'YvetteLau',
-    sayHi: function(){
-        setTimeout(function(){
-            console.log('Hello,',this.name);
-        })
-    }
-}
-var person2 = {
-    name: 'Christina',
-    sayHi: sayHi
-}
-var name='Wiliam';
-person1.sayHi();
-setTimeout(person2.sayHi,100);
-setTimeout(function(){
-    person2.sayHi();
-},200);
 
-
+timeout(100).then((value) => {
+  console.log(value);
+});
 
     </script>
 </body>
