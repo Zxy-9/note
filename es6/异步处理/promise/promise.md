@@ -17,9 +17,31 @@ pro.then(data=>{
     //如果当前是未决阶段，则会加入到作业队列，等待到达rejected状态后执行
     //err为状态数据
 })
-
-const pro = new Promise()
 ```
+```javascript
+const pro = new Promise((resolve,reject)=>{
+    console.log(123);
+    reject(789)
+}).then((data) => {
+    console.log(data)
+}).catch((err)=>{
+    console.log(err)
+}) 
+```
+//输出789，因为是把运行失败的IE过推向catch
+```javascript
+const pro1 = new Promise((resolve,reject)=>{
+    
+    setTimeout(()=>{
+        resolve('在3秒后执行的resolve')
+    },3000)
+}).then((data) => {
+    console.log(data)
+}).catch((err)=>{
+    console.log(err)
+})//输出在3秒后执行的resolve，在3秒钟之前都是pending状态
+```
+
 
 **细节**
 
