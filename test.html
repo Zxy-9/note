@@ -13,20 +13,17 @@
 		
 		<script>
 			
-			
+			function test1 (){
+				return new 	Promise((resole,reject)=>{
+					resole(2)
+				})
+			}
+		async	function test2(){
+				const result = await test1()
+				console.log(result)
+			}
+			test2()
 
-      setTimeout(()=>{
-	console.log('setTimeout')
-})
-let p1 = new Promise((resolve) => {
-	console.log('Promise1')
-	resolve('Promise2')
-})
-p1.then((res) => {
-	console.log(res)
-})
-console.log(1)
- 
 			
 		</script>
 
