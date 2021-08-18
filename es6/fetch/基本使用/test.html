@@ -13,8 +13,14 @@
     <script>
         function getProvinces() {
           const url = "http://study.yuanjin.tech/api/local"
+          const config = {
+              methods:"GET",
+              hearder:{
+                  "Content-Type":"application/json"
+              }
+          }
             fetch(url)
-            
+
         }
 
         document.querySelector("button").onclick = function() {
