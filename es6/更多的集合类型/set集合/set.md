@@ -82,9 +82,23 @@ console.log(arr2)
 ```js
    let s2 = new Set([1,2,6,3,4,5]) 
  
-     s2.forEach(res=>{
+     s2.forEach((res,index,s)=>{
          console.log(res)
+         console.log(index) //这里不是下标，由于set集合中不存在下标，和上面的res输出一样
+         console.log(s)
      })
 ```
 
 注意：set集合中不存在下标，因此forEach中的回调的第二个参数和第一个参数是一致的，均表示set中的每一项
+###set的应用
+把两个数组并集
+```js
+  const arr1 = [1,22,4,5,6,77,8,44,1,2,22]
+        const arr2 = [1,2,88,99,66,4,5,1,2]
+
+        const newArr = new Set(arr1.concat(arr2))
+        console.log(...newArr)
+
+```
+把两个数组交集
+
