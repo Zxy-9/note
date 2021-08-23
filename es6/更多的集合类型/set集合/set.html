@@ -10,13 +10,16 @@
     <script>
         const arr1 = [1,22,4,5,6,77,8,44,1,2,22]
         const arr2 = [1,2,88,99,66,4,5,1,2]
-const  Arr = []
-        const a1 = new Set(arr1)
+
+        const a1 = [...new Set(arr1)]
+        console.log(a1)
     const a2 =new Set(arr2)
-    [...a1].filter(item=>{
-       return arr2.indexOf(item)>=0
+   const newArr = Array.from(a1.filter(item=>{
+      return  a2.has(item)
         })
- 
+        
+ ) 
+ console.log(newArr)
        
  
       
