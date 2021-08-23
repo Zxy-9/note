@@ -101,4 +101,18 @@ console.log(arr2)
 
 ```
 把两个数组交集
+```js
+    const arr1 = [1,22,4,5,6,77,8,44,1,2,22]
+        const arr2 = [1,2,88,99,66,4,5,1,2]
+
+        const a1 = [...new Set(arr1)]
+        const a2 =new Set(arr2)
+         const newArr = Array.from(a1.filter(item=>{
+         return  a2.has(item)
+        })
+        
+ ) 
+ console.log(newArr)
+ ```
+
 
