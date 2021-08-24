@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      const arr =   Array.of(1,2,3,4,4)
+      console.log(arr)
+      const arr1 = [
+        {
+          name:1,
+          age:18
+        },
+        {
+          name:2,
+          age:18
+        },
+        {
+          name:3,
+          age:18
+        },
+        {
+          name:4,
+          age:18
+        },
+        {
+          name:5,
+          age:18
+        }
+      ]
+      const newAge = arr1.find(item=>{
+        if(item.name = 2){
+          return true
+        }else{
+          return false
+        }
+      })
+      console.log(newAge)
+
+      function a(){
+        var temp = 100
+        function b(){
+          console.log(temp)
+        }
+        return a
+      }
+      var test = a()
+      test()
+    </script>
+</body>
+</html>
