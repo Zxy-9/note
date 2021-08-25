@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var test =function (a) {
+           for (var i=0;i<arguments.length;i++){
+               if (arguments[i]='小猪'){
+                   console.log('哼哼')
+               }       else if(arguments[i]='小狗'){
+                   console.log('wangwang')}else{
+                       console.log('其他')
+               }
+           }
+    }
+    test('小猪')
+
+    var test1 =function (b) {
+        if (b == 1){
+            return 1
+        }
+            return b*test1(b-1)
+    }
+  console.log( test1(5))
+</script>
+</body>
+</html>

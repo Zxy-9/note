@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*t弹出的a是什么*/
+    function b(x,y,a) {
+            arguments[2]=10
+        alert(a)
+    }
+    b(1,2,3)
+    /*弹出的a1是什么*/
+    function b1(x1,y1,a1) {
+       a1 = 10
+        alert(arguments[2])
+    }
+    b1(1,2,3)
+</script>
+</body>
+</html>

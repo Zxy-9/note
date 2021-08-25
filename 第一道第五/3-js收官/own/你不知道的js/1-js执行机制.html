@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+    <h2>浏览器常驻线程</h2>
+    <li>js引擎线程</li>
+    <li>GUI线程（用户可以看到的）</li>
+    <li>http请求线程</li>
+    <li>定时触发线程</li>
+    <li>浏览器事件处理线程</li>
+</ul>
+<ul>
+    <h2 style="color: #ff4400">
+        注：
+    </h2>
+    <li>GUI线程和js引擎线程是互斥的</li>
+</ul>
+<ul>
+    <h2 >
+        js引擎线程
+    </h2>
+ <li>执行机制:单线程（同一时间只能做一件事）</li>
+    <li>
+        js设计出来就是和用户进行交互的，如果是多线程的话，同一时间一个想要删除dom，一个想要修改dom，浏览器不知道听谁的
+    </li>
+    <li>SSR技术：进行大量数据的渲染计算</li>
+    <li>基于单线程运行，同时又可以异步执行，一般来说这种语言都是基于事件来驱动的</li>
+</ul>
+
+
+</body>
+</html>

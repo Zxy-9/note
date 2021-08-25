@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var personArr=[
+        {name:'刘三',des:'颈椎不好',sex:'男',age:21},
+        {name:'张李',des:'我是谁',sex:'女',age:30},
+        {name:'刘小鸟',des:'好看',sex:'男',age:10},
+        {name:'马飞',des:'瓜皮',sex:'女',age:40},
+    ]
+    var obj={
+        age:0
+    }
+
+   var returnResult= personArr.reduce(function (preValue,ele,index,_arr) {
+         console.log(preValue,ele,index,_arr)
+        preValue.age+=ele.age
+        return preValue
+    },obj)
+    console.log(returnResult)
+</script>
+</body>
+</html>

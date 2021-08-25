@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+       <div id="show">0</div>
+<button id="btn">run</button>
+       <script>
+           var oDiv =document.getElementById('show')
+           var btn =document.getElementById('btn')
+            function th(handle,wait) {
+               var lastTime=0;
+               return function () {
+                   var nowTime =new Date().getTime()
+
+                   if (nowTime-lastTime>wait){
+                       handle();
+                       lastTime=nowTime;
+                   }
+               }
+
+
+            }
+           function add() {
+               oDiv.innerText=parseInt(oDiv.innerText)+1;
+           }
+
+
+           btn.onclick=th(add,1000)
+       </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            background: orange;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        button {
+            margin-top: 150px;
+        }
+        span{
+            width: 1px;
+            height: 100px;
+            background-color: black;
+            position: absolute;
+            left: 300px;
+            top: 0px;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<span></span>
+<button id="btn">run</button>
+<button id="btn1">stop</button>
+<script>
+    var oDiv =document.getElementsByTagName('div')[0]
+    var btn =document.getElementById('btn')
+    var btn1 =document.getElementById('btn1')
+
+    //v=v+at
+    btn.onclick=function () {
+        startMove(oDiv,300)
+    }
+    btn1.onclick=function () {
+            clearInterval(timer)
+    }
+    var timer =null
+    function startMove(dom,target) {
+
+        clearInterval(timer)
+         var a=3
+        var s=0
+        var u =0.8
+
+        timer=setInterval(function () {
+            a = (target-dom.offsetLeft)/5
+            s +=a
+             s *=u
+            if (Math.abs(s)<1&&Math.abs(target-dom.offsetLeft)<1){
+                clearInterval(timer)
+            }
+              dom.style.left=dom.offsetLeft+s+'px'
+        },20)
+
+    }
+
+
+</script>
+</body>
+</html>

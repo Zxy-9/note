@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    arr=[1,2,3,1,2,4,1,2,1,4]
+    Array.prototype.unique=function () {
+              var temp= {}
+               arr =[]
+        for (var i=0;i<this.length;i++){
+            if (!temp[this[i]]){
+                temp[this[i]]='a'
+             arr.push(this[i])
+            }
+            
+        }
+        return arr
+    }
+    arr.unique()
+    console.log(arr)
+</script>
+</body>
+</html>

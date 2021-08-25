@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var cookie = "SINAGLOBAL=39.155.66.34_1580190725.438085; U_TRS1=0000006b.99497c69.5e814366.1feb5346; SGUID=1588906985331_37834485; UM_distinctid=1783118d6856d1-07c6a039a7601a-3a65420e-144000-1783118d686602; UOR=,,; Apache=111.33.86.107_1620723770.718571; NowDate=Tue May 11 2021 17:02:52 GMT+0800 (中国标准时间); name=sinaAds; post=massage; page=23333; ULV=1620723777057:12:1:1:111.33.86.107_1620723770.718571:1617167164936; CNZZDATA1271230489=1792098642-1620719958-%7C1620719958"
+
+    function parseCookie(str) {
+
+                 var obj ={}
+                  var cookie=str.split(';')
+                 cookie.reduce(function (preValue,ele,index,_arr) {
+                  /*  console.log(preValue,ele)*/
+                      var arr =ele.split('=')
+                        console.log(arr)
+                          preValue[arr[0]]=arr[1]    //  arr[0]：属性名   arr[1]：属性值
+
+                        return preValue
+},obj)
+                 return obj
+    }
+    console.log(parseCookie(cookie))
+
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    Car.prototype.name='car'
+      function Car() {
+
+      }
+      var car=new Car()
+
+      function Car(){
+          this.name='bnm'
+      }
+      car.__proto__=Car
+    console.log(car.name)
+</script>
+</body>
+</html>

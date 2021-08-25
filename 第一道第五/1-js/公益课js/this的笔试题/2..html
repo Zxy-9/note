@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+那个能输出[1,2,3,4,5]
+<body>
+<script>
+    function foo1(x) {
+        console.log('第一个'+arguments)
+        return x
+    }
+    foo1(1,2,3,4,5)
+
+
+
+             function foo2(x) {
+                 console.log('第二个'+arguments)
+                 return x
+
+             }(1,2,3,4,5)
+
+
+
+    (function foo3(x) {
+        console.log('第三个'+arguments)
+        return x
+    })(1,2,3,4,5)
+
+
+
+    function foo4() {
+          bar.apply(null,arguments)
+    }
+    function bar() {
+        console.log('第四个'+arguments)
+    }
+    foo4(1,2,3,4,5)
+</script>
+</body>
+</html>

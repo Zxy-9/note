@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>   function f1() {
+
+    console.log(arguments.callee)
+}
+f1()
+
+
+   /*    "use strict";*/
+       function f() {
+           "use strict";//此时这个函数遵循es5.0的严格模式
+                console.log(arguments.callee)
+       }
+       f()
+
+</script>
+</body>
+</html>

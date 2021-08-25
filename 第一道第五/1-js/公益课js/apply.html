@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function Person(name,age) {
+                           this.name=name
+        this.age=age
+    }
+    function Student(name,age,grade){
+        Person.apply(this,[name, age,grade])
+        this.grade=grade
+
+    }
+    var student = new Student('xiao',18,2017)
+    console.log(student)
+
+</script>
+</body>
+</html>
