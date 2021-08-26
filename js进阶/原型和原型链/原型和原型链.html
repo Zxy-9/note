@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+
+function A(){}
+var obj=new A()
+var obj1 = new A()
+obj.abc = 123
+obj1.__proto__.bcd = 456;
+
+function B(name,age){
+    this.name = name
+    this.age = age
+}
+B.prototype.run = function(run){
+    this.run = run 
+   return run
+}
+
+var test = new B("lisi",18)
+console.log(test.run(12))
+
+
+    </script>
+</body>
+</html>
