@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style lang="less">
+        .container{
+            display:flex;
+            width:300px;
+           background-color: blue;
+            height:50px;
+        }
+        .a{
+            flex:1;
+            width:50px;
+            background-color: blueviolet;
+            height:50px
+        }
+        .b{
+            flex:2;
+            width:50px;
+            background-color: brown;
+            height:50px
+        }
+        </style>
+</head>
+<body>
+    <div class="container">
+        <div class="a">
+            
+        </div>
+        <div class="b"></div>
+    </div>
+    <script>
+        function method ({ a = 1, b = 2, c = 3 }) {
+	console.log(a, b, c);
+}
+method();
+
+    </script>
+</body>
+</html>
