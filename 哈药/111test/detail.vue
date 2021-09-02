@@ -1,20 +1,21 @@
 <template>
 	<view>
 		
-		<view class="title" style="font-size: 16px;"><span>|</span>基本信息<button class="linkBtn" @click="backUp"
-				style="top: 16px;right: 24px;width: 72px;">返回</button></view>
 		
 		<view class="bg-white addContent">
+			<view class="pageTitle"><span>|</span>基本信息
+			    <button class="linkBtn" @click="goBack" >返回</button>
+			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">物料编码</view>
+				<view class="title">物料库存详情</view>
 				<view class="flex4">title</view>
 			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">物料描述</view>
+				<view class="title">物料编码</view>
 				<view class="flex4">supervisorDptName</view>
 			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">供应商</view>
+				<view class="title">状态</view>
 				<view class="flex4">supervisorName</view>
 			</view>
 			<view class="cu-form-group displayFlex">
@@ -22,39 +23,63 @@
 				<view class="flex4">supervisorStoreName</view>
 			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">计量单位</view>
+				<view class="title">基本单位</view>
 				<view class="flex4">applyRecord</view>
 			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">物料类型</view>
+				<view class="title">物料组（及名称）</view>
 				<view class="flex4">applyRecord</view>
 			</view>
 			<view class="cu-form-group displayFlex">
-				<view class="title">批号</view>
+				<view class="title">库存地点</view>
 				<view class="flex4">applyRecord</view>
 			</view>
-			<view class="cu-form-group displayFlex">
-				<view class="title">辅助单位</view>
-				<view class="flex4">applyRecord</view>
+
+		</view>
+		
+		<!-- 列表 -->
+		<view class="bg-white addContent">
+			<view class="pageTitle"><span>|</span>分批信息
+			   
 			</view>
-			<view class="cu-form-group displayFlex">
-				<view class="title">综合数量</view>
-				<view class="flex4">applyRecord</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">批号</view>
+				<view class="flex-sub">12547855</view>
 			</view>
-			<view class="cu-form-group displayFlex">
-				<view class="title">厂家批号</view>
-				<view class="flex4">applyRecord</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">基本单位及数量</view>
+				<view class="flex-sub">12547855</view>
 			</view>
-			<view class="cu-form-group displayFlex">
-				<view class="title">有效期</view>
-				<view class="flex4">applyRecord</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">辅助单位及数量</view>
+				<view class="flex-sub">12547855</view>
+			</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">综合数量</view>
+				<view class="flex-sub">12547855</view>
+			</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">供应商</view>
+				<view class="flex-sub">12547855</view>
+			</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">供应商名称</view>
+				<view class="flex-sub">12547855</view>
+			</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">厂家批号</view>
+				<view class="flex-sub">12547855</view>
+			</view>
+			<view class=" flex  padding-top-sm padding-left-sm"  >
+				<view class="flex-sub">有效期</view>
+				<view class="flex-sub">12547855</view>
 			</view>
 		
-			
 		
 		
 		</view>
 		
+		<!-- 列表结束 -->
 		
 	
 	</view>
@@ -64,15 +89,12 @@
 </script>
 
 <style scoped>
-	.bigTitle {
+.bigTitle {
 		margin: 5px 10px;
 		padding: 3px 0;
 		font-weight: bold;
 	}
-	
-	.flex4{
-		color: #aaa;
-	}
+
 	.addContent {
 		border-radius: 4px;
 		margin: 5px;
@@ -117,6 +139,9 @@
 	.cu-form-group .title {
 		color: #333;
 		flex: 1.5;
+        height: 35px;
+        line-height: 35px;
+        font-size: 15px;
 	}
 
 	.cu-form-group uni-input,
@@ -127,6 +152,9 @@
 	.flex5 {
 		flex: 5;
         color:#aaa;
+        font-size: 14px;
+        height: 35px;
+        line-height: 35px;
 	}
 
 	.mt10 {
@@ -321,11 +349,12 @@
 	}
 
 	.submit-position {
-		/*position: fixed;*/
-		/*left: 0;*/
-		/*bottom: 0;*/
-		/*right: 0;*/
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		right: 0;
         padding:10px 15px;
+        background: #f2f2f2;
 	}
     .submit-position .cu-bar{height: 35px;min-height: 35px;}
     .userName{height: 35px;line-height: 35px;margin-left: 5px;}
@@ -345,5 +374,43 @@
 		overflow: hidden;
 		display: flex;
 		justify-content: center;
+	}
+    .btn-position{position: fixed;left: 0;bottom: 0;right: 0;}
+    .btnStyle{
+        display: flex;
+        padding: 10px 15px;
+    }
+    .cu-btn.lg{height: 35px;background: #0081ff;color: #fff;flex: 1;}
+    .mr10{margin-right: 10px;}
+    .pageTitle{
+        height: 40px;
+        line-height: 42px;
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+        color: #0077e7;
+        position: relative;
+    }
+    .pageTitle span{
+        font-weight: bolder;
+        margin-right: 6px;
+        margin-top: -1px;
+    }
+    .linkBtn {
+        width: 72px;
+        height: 26px;
+        line-height: 26px;
+        font-size: 14px;
+        padding: 0 10px;
+        color: white;
+        background-color: #0077E7;
+        border-radius: 3px;
+        position: absolute;
+        top: 7px;
+        right: 0px;
+    }
+    .flex1{flex: 1;}
+    .flex1.cu-btn{height: 40px;line-height: 40px;font-size: 16px;}
+	.flex4{
+		color: #aaa;
 	}
 </style>

@@ -14,9 +14,6 @@
 			
 				<text class="fontSize cuIcon-filter" @tap="showModal" data-target="viewModal"></text>
 			</view>
-			
-			
-		
 
 		</scroll-view>
 		<!--   回到首页箭头     -->
@@ -26,36 +23,25 @@
 		<view class="listCon">
 			<view class="cu-list menu">
 				<view class="cu-item"  
-					@click="godemandDetail">
-					<view class="content">
-						<view class="text-black flex5">
-							<view class="text-xl margin-bottom-sm">AD78956012</view>
-							<view class="text-cut" style="color:#96959c;">客户名称：</view>
+					@click="goDetail">
+					<view class="content flex">
+						<view class="text-black flex5 rigth-text">
+							<view class="text-xl margin-bottom-sm">物料描述</view>
+							<view class="text-cut" style="color:#96959c;">库存地点：</view>
 							<view class="flex5" style="color:#96959c;">id</view>
-							<view class="text-cut" style="color:#96959c;">过账状态：</view>
+							<view class="text-cut" style="color:#96959c;">库存数量：</view>
 							<view class="flex5" style="color:#96959c;">已过</view>
-							<view class="text-cut" style="color:#96959c;">开票状态：</view>
+							<view class="text-cut" style="color:#96959c;">基本单位：</view>
 							<view class="flex5" style="color:#96959c;">已开</view>
+						</view>
+						<view class="left-text ">
+							<button class="cu-btn round lines-green myButton" >可用</button>
 						</view>
 						
 					</view>
 				</view>
 				
-				<view class="cu-item"
-					@click="godemandDetail">
-					<view class="content">
-						<view class="text-black flex5">
-							<view class="text-xl margin-bottom-sm">AD78956012</view>
-							<view class="text-cut" style="color:#96959c;">客户名称：</view>
-							<view class="flex5" style="color:#96959c;">id</view>
-							<view class="text-cut" style="color:#96959c;">过账状态：</view>
-							<view class="flex5" style="color:#96959c;">已过</view>
-							<view class="text-cut" style="color:#96959c;">开票状态：</view>
-							<view class="flex5" style="color:#96959c;">已开</view>
-						</view>
-						
-					</view>
-				</view>
+			
 			</view>
 		
 		</view>
@@ -68,7 +54,7 @@
 			<view class="bg-white pd10" style="overflow-y: auto;">
 				
 				<view class="commonView">
-					<view class="shaixuan-item-title" @click="gochangClick">工厂</view>
+					<view class="shaixuan-item-title" @click="gochangClick">工厂<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
 					<view class="item-mb9">
 						<view class='cu-tag radius cur'>45</view>
 					</view>
@@ -821,4 +807,9 @@
 		top: 6px;
 		right: 15px;
 	}
+	.left-text{
+		margin-left: 200px;
+		margin-top: 35px;
+	}
+	
 </style>

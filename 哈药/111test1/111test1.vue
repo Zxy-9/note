@@ -7,7 +7,7 @@
 				<view class="search-form">
 					<text class="cuIcon-search"></text>
 					
-					<input @input="searchInput" @focus="InputFocus" @blur="InputBlur" :adjust-position="false"
+					<input @input="searchInput" @focus="InputFocus" @blur="InputBlur" 
 						type="text" placeholder="交货单号、客户名称、物料名称过账状态" confirm-type="search"  />
 				</view>
 
@@ -44,14 +44,19 @@
 			<view class="bg-white pd10" style="overflow-y: auto;">
 				
 				<view class="commonView">
-					<view class="shaixuan-item-title" @click="deliveryClick">交货类型</view>
+					
+					
+					
+					
+					
+					<view class="shaixuan-item-title " @click="deliveryClick">交货类型<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
 					<view class="item-mb9">
-						<view class='cu-tag radius cur'>45</view>
+						<view class='cu-tag radius cur chooseOne' >urgencyValue</view>
 					</view>
 	
 					<view class="shaixuan-item-title margin-top" @click="sellClick">销售组织</view>
 					<view class="item-mb9">
-						<view class='cu-tag radius cur' >12 </view>
+						<view class='cu-tag radius cur' >111 </view>
 					</view>
 	
 					<view class="shaixuan-item-title margin-top" @click="distributionClick">分销渠道</view>
@@ -77,10 +82,10 @@
 						</view>
 					</view>
 					<view class="shaixuan-item-title margin-top" @click="dateClick" >创建日期
+					<view style="color: #f00; display: inline-block;">*</view>
 						<view class="item-mb9">
-							<view class='cu-tag radius cur' >
-								33
-							</view>
+							<view class='cu-tag radius cur chooseOne' >111</view>
+							
 						</view>
 					</view>
 						
@@ -97,7 +102,8 @@
 					<button type="button" class="cu-btn round bg-blue lg" style="background-color: #47a4ff;"
 						@click="confirmClick">确定</button>
 				</view>
-				<chouti ref="childList" :delivery = "deliveryValue" :sell="sellValue" :distribution="distributionValue"
+				<chouti ref="childList" @getChildrenValue="getChildren" :serviceType="serviceTypeValue"
+										:delivery = "deliveryValue" :sell="sellValue" :distribution="distributionValue"
 				                        :status = "statusValue" :office = "officeValue" :date ="dateValue" 
 				></chouti>
 			</view>
@@ -124,6 +130,8 @@
 		},
 		data() {
 			return {
+				serviceTypeValue:'',
+				
 				modalName:null,
 				InputBottom:"",
 				isExpectedTime: false,
@@ -134,13 +142,42 @@
 				statusValue:'',
 				officeValue:'',
 				dateValue:'',
-				list:[]
+				list:[],
+				serviceTypeList:[],
+				sortList: [{
+						name: '交货类型',
+						value: 'deliveryTp'
+					},
+					{
+						name: '销售组织',
+						value: 'sellOr'
+					},
+					{
+						name: '分销渠道',
+						value: 'distributionCh'
+					},
+					{
+						name: '发货状态',
+						value: 'deliverySt'
+					},
+					{
+						name: '销售办事处',
+						value: 'sellOff'
+					},
+					{
+						name: '创建日期',
+						value: 'dateEs'
+					},
+				],
 				
 				}
 		},
 		
 	
 		methods: {
+			
+			
+			
 			//点击确定按钮
 			confirmClick(){
 				this.modalName = null
@@ -149,6 +186,62 @@
 				this.queryData = [];
 				this.list = [];
 				this.getInfoList();
+			},
+			getInfoList(){
+				var serviceTypeArr = []
+				this.serviceTypeList.forEach(item => {
+					serviceTypeArr.push(item.value)
+				});
+				console.log(this.serviceTypeList)
+				
+				
+				
+				var data={}
+				let params = data;
+				let _this = this;
+				_this.$http.get("/o2m/bizz/amsSrMstr/list", {
+					params
+				}).then(res => {
+					if (res.data.code === 200) {
+						console.log("resdataresdata::::",res.data)
+						if (res.data) {
+							_this.queryData = _this.queryData.concat(res.data.result.records);
+							_this.queryData.forEach(item => {
+								if (item.createTime) {
+									var time = item.createTime.split(" ");
+									item.createTime = time[0];
+								}
+								if (item.epdtm) {
+									var time1 = item.epdtm.split(" ");
+									item.epdtm = time1[0];
+								}
+								if (item.prstm) {
+									var time2 = item.prstm.split(" ");
+									item.prstm = time2[0];
+								}
+								if (item.pretm) {
+									var time3 = item.pretm.split(" ");
+									item.pretm = time3[0];
+								}
+							})
+							if (res.data.result.records.length == 0) {
+								uni.showToast({
+									title: '无更多相关数据',
+									icon: 'none',
+									duration: 2000
+								});
+								_this.loadingModal = false;
+							}
+						}
+					} else {
+						uni.showModal({
+							content: res.data.message,
+							showCancel: false,
+							confirmText: '关闭',
+						})
+					}
+				})
+				
 			},
 			showModal(e){
 				this.modalName = e.currentTarget.dataset.target
@@ -189,43 +282,9 @@
 				this.$refs.childList.showChouTi("dateClick");
 			},
 			//子组件点击确定按钮时调用该方法
-			getChildren(data1, data2) {
-				console.log('从子组件传递过来的值：', data1, data2)
-				if (data1 == 'serviceType') {
-					this.serviceTypeList = data2;
-				} else if (data1 == 'chooseDepartment') {
-					this.chooseDepartmentList = data2
-				} else if (data1 == 'reportingUser') {
-					this.reportingUserList = this.unique(data2);
-				} else if (data1 == 'reportingtime') {
-					this.reportingtimeText = data2.text;
-					this.reportingtimeValue = data2.value;
-					if (data2.text != "") {
-						this.isReportingTime = true
-					} else {
-						this.isReportingTime = false
-					}
-				} else if (data1 == 'expectedtime') {
-					this.expectedtimeText = data2.text;
-					this.expectedtimeValue = data2.value;
-					if (data2.text != "") {
-						this.isExpectedTime = true
-					} else {
-						this.isExpectedTime = false
-					}
-				} else if (data1 == 'systemmodule') {
-					this.systemModuleList = data2
-				} else if (data1 == 'operationperson') {
-					this.operationPersonList = data2
-				} else if (data1 == 'urgency') {
-					this.urgencyList = data2
-				} else if (data1 == 'demandstatus') {
-					this.demandStatusList = data2
-				} else if (data1 == 'approvalstatus') {
-					this.approvalStatusList = data2
-				} else if (data1 == 'cancelstatus') {
-					this.cancelStatusList = data2
-				}
+			getChildren() {
+				console.log('从子组件传递过来的值：')
+				
 			},
 			//点击筛选条件的取消按钮
 			cancelBtn() {
