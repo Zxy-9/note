@@ -4,68 +4,97 @@
 			<view class="cu-dialog basis-lg" @tap.stop=""
 				:style="[{top:CustomBar +'px',height:'calc(100vh - ' + CustomBar + 'px)'}]">
 				<view class="cu-list menu text-left">
-					<!-- 交货类型 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseDeliveryItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
-					<!-- 销售组织 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseSellItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
-					<!-- 分销渠道 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseDistributionItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
-					<!-- 发货状态 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseStatusItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
-					<!-- 销售办事处 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseOfficeItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
-					<!-- 创建日期 -->
-					<view class="choosedTitle">
-						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
-					</view>
-					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
-						v-for="(item,index) in serviceTypeListArr"
-						@click="chooseDateItem(index,item.text,item.value)">
-						<view class="dian">{{item.text}}</view>
-						<div class="duigou"></div>
-					</view>
 					
-
+				
+					<!-- 服务类型 -->
+					<view class="choosedTitle">
+						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
+					</view>
+					<view class="cu-item" :class="{current:serviceTypeCur[index]}" v-if="isserviceType"
+						v-for="(item,index) in serviceTypeListArr"
+						@click="chooseServiceTypeItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!--提报用户-->
+					<view class="reportingInfo" v-if="isreportingUser">
+						<input v-if="isreportingUser" class="searchInputStyle" :adjust-position="false" type="text"
+							placeholder="输入关键字搜索" confirm-type="search" v-model="realname" />
+					</view>
+					<view style="width: 100%;height: 50px;" v-if="isreportingUser"></view>
+					<view class="cu-item" :class="{current:reportingUserCur[index]}" v-if="isreportingUser"
+						v-for="(item,index) in reportingUserListArr"
+						@click="chooseReportingUserItem(index,item.realname,item.username)">
+						<view class="dian"><text class="cuIcon-people"
+								style="margin:0 4px 0 3px;"></text>{{item.realname}}</view>
+						<div class="duigou"></div>
+					</view>
+					<uni-load-more :status="pageStatus" v-if="reportingUserListArr.length>0 && isreportingUser == true">
+					</uni-load-more>
+					<view class="noMessage" v-if="realname =='' && isreportingUser == true">
+						<text class="cuIcon-searchlist"></text>
+						<p v-if="isreportingUser">请输入关键字搜索</p>
+					</view>
+					<!--提报部门-->
+					<!-- <view class="cu-item" :class="{current:chooseDepartmentCur[index]}" v-if=" ischooseDepartment"
+						v-for="(item,index) in chooseDepartmentListArr" :key="index"
+						@click="chooseDepartmentItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view> -->
+					<!--提报时间-->
+					<view class="cu-item" :class="{current:reportingTimeCur[index]}" v-if="isreportingtime"
+						v-for="(item,index) in reportingTimeListArr" @click="chooseTimeItem(index,item)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 期望完成 -->
+					<view class="cu-item" :class="{current:expectedTimeCur[index]}" v-if="isexpectedtime"
+						v-for="(item,index) in expectedTimeListArr" @click="chooseExpectedTimeItem(index,item)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 系统模块 -->
+					<view class="cu-item" :class="{current:systemModuleCur[index]}" v-if="issystemmodule"
+						v-for="(item,index) in systemModuleListArr"
+						@click="chooseSystemModuleItem(index,item.symod,item.value)">
+						<view class="dian">{{item.symod}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 运维人员 -->
+					<view class="cu-item" :class="{current:operationPersonCur[index]}" v-if="isoperationperson"
+						v-for="(item,index) in operationPersonListArr"
+						@click="choosePersonItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 紧急程度 -->
+					<view class="cu-item" :class="{current:urgencyCur[index]}" v-if="isurgency"
+						v-for="(item,index) in urgencyListArr" @click="chooseUrgencyItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 服务状态 -->
+					<view class="cu-item" :class="{current:demandStatusCur[index]}" v-if="isdemandstatus"
+						v-for="(item,index) in demandStatusListArr"
+						@click="chooseDemandItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 审批状态 -->
+					<view class="cu-item" :class="{current:approvalStatusCur[index]}" v-if="isapprovalstatus"
+						v-for="(item,index) in approvalStatusListArr"
+						@click="chooseApprovalItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
+					<!-- 取消状态 -->
+					<view class="cu-item" :class="{current:cancelStatusCur[index]}" v-if="iscancelstatus"
+						v-for="(item,index) in cancelStatusListArr"
+						@click="chooseCancelItem(index,item.text,item.value)">
+						<view class="dian">{{item.text}}</view>
+						<div class="duigou"></div>
+					</view>
 				</view>
 				<view style="width: 100%;height:48px;"></view>
 				<view class="confirmBtn">
@@ -91,7 +120,6 @@
 			tkiTree
 		},
 		props: {
-			
 			// 服务类型
 			serviceType: String,
 			// 提报部门
@@ -290,55 +318,96 @@
 			},
 			showChouTi(param, param2, param3) {
 				this.paramValue = param;
-				//交货类型
 				if (param == 'deliveryClick') {
+									
+									this.fuwuleixing = param2
+									console.log('交货类型:', this.fuwuleixing);
+									this.queryDeliveryList();
+									this.choosedTitle = "交货类型";
+								}
+				//服务类型
+				if (param == 'serviceType') {
 					//获取所有服务类型的列表
 					this.fuwuleixing = param2
-					console.log('交货类型:', this.fuwuleixing);
-					this.queryDeliveryList();
-					this.choosedTitle = "交货类型";
+					console.log('fuwuleixing:', this.fuwuleixing);
+					this.queryserviceTypeList();
+					this.choosedTitle = "服务类型";
 				}
-				//销售组织
-				if (param == 'sellClick') {
-					//获取所有服务类型的列表
-					this.fuwuleixing = param2
-					console.log('销售组织:', this.fuwuleixing);
-					this.querySellList();
-					this.choosedTitle = "销售组织";
+				//提报用户
+				if (param == 'reportingUser') {
+					this.tibaoyonghu = param2;
+					this.tibaoyonghu2 = param2;
+					console.log('tibaoyonghu:', this.tibaoyonghu)
+					this.queryreportingUserList(this.realname);
+					this.choosedTitle = "提报用户";
+					this.arr = JSON.parse(JSON.stringify(param3));
 				}
-				
-				//分销渠道
-				if (param == 'distributionClick') {
-					//获取所有服务类型的列表
-					this.fuwuleixing = param2
-					console.log('分销渠道:', this.fuwuleixing);
-					this.queryDistributionList();
-					this.choosedTitle = "分销渠道";
+				//提报时间
+				if (param == 'reportingtime') {
+					//获取提报时间
+					this.queryreportingTimeList();
+					this.choosedTitle = "提报时间";
 				}
-				//发货状态
-				if (param == 'statusClick') {
-					//获取所有服务类型的列表
-					this.fuwuleixing = param2
-					console.log('发货状态:', this.fuwuleixing);
-					this.queryStatusList();
-					this.choosedTitle = "发货状态";
+				//期望完成
+				if (param == 'expectedtime') {
+					//获取期望完成时间
+					this.queryexpectedTimeList();
+					this.choosedTitle = "期望完成";
 				}
-				//销售办事处
-				if (param == 'officeClick') {
-					//获取所有服务类型的列表
-					this.fuwuleixing = param2
-					console.log('销售办事处:', this.fuwuleixing);
-					this.queryOfficeList();
-					this.choosedTitle = "销售办事处";
+				//系统模块
+				if (param == 'systemmodule') {
+					this.xitongmokuai = param2
+					console.log('xitongmokuai:', this.xitongmokuai)
+
+					//获取系统部门列表
+					this.querysystemModuleList();
+					this.choosedTitle = "系统模块";
+
 				}
-				//创建日期
-				
-				if (param == 'dateClick') {
-					//获取所有服务类型的列表
-					this.fuwuleixing = param2
-					console.log('创建日期:', this.fuwuleixing);
-					this.queryDateList();
-					this.choosedTitle = "创建日期";
+				//运维人员
+				if (param == 'operationperson') {
+					this.yunweirenyuan = param2
+					console.log('yunweirenyuan:', this.yunweirenyuan)
+
+					//获取运维人员列表
+					this.queryoperationPersonList();
+					this.choosedTitle = "运维人员";
+
+				}
+				//紧急程度
+				if (param == 'urgency') {
+					this.jinjichengdu = param2
+					console.log('jinjichengdu:', this.jinjichengdu)
+					//获取紧急程度列表
+					this.queryUrgencyList();
+					this.choosedTitle = "紧急程度";
+				}
+				//服务状态
+				if (param == 'demandstatus') {
+					this.fuwuzhuangtai = param2
+					console.log('fuwuzhuangtai:', this.fuwuzhuangtai)
+
+					//获取服务状态
+					this.querydemandStatusList()
+					this.choosedTitle = "服务状态";
+				}
+				//审批状态
+				if (param == 'approvalstatus') {
+					this.shenpizhuangtai = param2
+					console.log('shenpizhuangtai:', this.shenpizhuangtai)
+
+					//获取审批状态
+					this.queryapprovalStatusList()
+					this.choosedTitle = "审批状态";
+				}
+				//取消状态
+				if (param == 'cancelstatus') {
+					this.quxiaozhuangtai = param2
+					console.log('quxiaozhuangtai:', this.quxiaozhuangtai)
+
+					//获取所有使用部门的列表
+					this.querycancelStatussList();
+					this.choosedTitle = "取消状态";
 				}
 				this.modalName = "DrawerModalR"
 			},

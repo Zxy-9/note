@@ -48,7 +48,6 @@
 					
 					
 					
-					
 					<view class="shaixuan-item-title " @click="deliveryClick">交货类型<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
 					<view class="item-mb9">
 						<view class='cu-tag radius cur chooseOne' >urgencyValue</view>
@@ -84,7 +83,7 @@
 					<view class="shaixuan-item-title margin-top" @click="dateClick" >创建日期
 					<view style="color: #f00; display: inline-block;">*</view>
 						<view class="item-mb9">
-							<view class='cu-tag radius cur chooseOne' >111</view>
+							<view class='cu-tag radius cur chooseOne ' >111</view>
 							
 						</view>
 					</view>
@@ -130,18 +129,23 @@
 		},
 		data() {
 			return {
+				//抽屉
 				serviceTypeValue:'',
-				
-				modalName:null,
-				InputBottom:"",
-				isExpectedTime: false,
-				urgencyValue: '',
-				deliveryValue:'',
+			    deliveryValue:'',
 				sellValue:'',
 				distributionValue:'',
 				statusValue:'',
 				officeValue:'',
 				dateValue:'',
+				
+				
+				
+				
+				modalName:null,
+				InputBottom:"",
+				isExpectedTime: false,
+				urgencyValue: '',
+				
 				list:[],
 				serviceTypeList:[],
 				sortList: [{
@@ -250,11 +254,17 @@
 			hideModal(e){
 				this.modalName = null
 			},
+			//服务类型
+			fuwuType() {
+				console.log('this.serviceTypeList:', this.serviceTypeList)
+				this.$refs.childList.showChouTi("serviceType", this.serviceTypeList);
+			},
+			
 			
 			//点击交货类型
 			deliveryClick() {
-				console.log(this.$refs)
-				this.$refs.childList.showChouTi("deliveryClick");
+				
+				this.$refs.childList.showChouTi("delivery",this.serviceTypeList);
 			},
 			//点击销售组织
 			sellClick() {

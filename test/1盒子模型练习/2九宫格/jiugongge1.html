@@ -1,0 +1,60 @@
+<!DOCTYPE html>   
+<html>   
+<head>   
+<meta charset="utf-8">   
+<title>九宫格布局</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=edge">   
+</head>   
+<body>   
+<html>   
+<head>   
+<style type="text/css">   
+	body{margin:0;padding:0;}  
+	
+	.grid_wrapper{   
+		width: 600px;   
+		height: 600px;   
+	}   
+	.grid{   
+		margin-left: 10px;   
+		margin-top: 10px;   
+	}   
+
+	.grid div,.grid div:visited{   
+		color:#008e7b;
+		font-size:20px;
+		width: 150px;   
+		float: left;   
+		border: 10px solid #4e69f3;   
+		text-decoration:underline;
+		text-align: center;   
+		line-height: 150px;   
+		margin-left: -10px;   
+		margin-top: -10px;   
+		position: relative;   
+		z-index: 1;   
+		
+	}   
+	.grid div:hover{   
+		border-color: #f00;   
+		z-index: 2;   
+	}   
+</style>   
+</head>   
+<body>   
+	<div class="grid_wrapper">   
+		<div class="grid">   
+			<div>1</div>   
+			<div>2</div>   
+			<div>3</div>   
+			<div>4</div>   
+			<div>5</div>   
+			<div>6</div>   
+			<div>7</div>   
+			<div>8</div>   
+			<div>9</div>   
+		</div>   
+	</div>   
+  
+</body>   
+</html>  
