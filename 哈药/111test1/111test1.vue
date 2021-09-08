@@ -1,4 +1,4 @@
-<!-- 销售交货单 -->
+<!-- 物料库存 -->
 
 <template>
 	<view>
@@ -7,50 +7,54 @@
 				<view class="search-form">
 					<text class="cuIcon-search"></text>
 					
-					<input @input="searchInput" @focus="InputFocus" @blur="InputBlur" 
-						type="text" placeholder="交货单号、客户名称、物料名称过账状态" confirm-type="search"  />
+					<input @input="searchInput" @focus="InputFocus" @blur="InputBlur" :adjust-position="false"
+						type="text" placeholder="搜索需求内容、功能程序、需求概述" confirm-type="search"  />
 				</view>
 
 			
 				<text class="fontSize cuIcon-filter" @tap="showModal" data-target="viewModal"></text>
 			</view>
-			<!--  列表 -->
-			<view class="listCon">
-				<view class="cu-list menu">
-					<view class="cu-item" style="border-radius: 10px;"  
-						@click="goDetail">
-						<view class="content"  >
-							<view class="text-black flex5 ">
-								<view class="text-xl margin-bottom-sm">AD78956012</view>
-								<view class="text-cut" style="color:#96959c;">客户名称：</view>
-								<view class="flex5" style="color:#96959c;">id</view>
-								<view class="text-cut" style="color:#96959c;">过账状态：</view>
-								<view class="flex5" style="color:#96959c;">已过</view>
-								<view class="text-cut" style="color:#96959c;">开票状态：</view>
-								<view class="flex5" style="color:#96959c;">已开</view>
-							</view>							
-						</view>
+
+		</scroll-view>
+	
+		
+		<!-- 列表 -->
+		
+		
+		<view class="listCon">
+			<view class="cu-list menu">
+				<view class="cu-item" style="border-radius: 10px;"  
+					@click="goDetail">
+					<view class="content flex"  >
+						<view class="text-black flex5 ">
+							<view class="text-xl margin-bottom-sm">物料描述</view>
+							<view class="text-cut" style="color:#96959c;">库存地点：</view>
+							<view class="flex5" style="color:#96959c;">id</view>
+							<view class="text-cut" style="color:#96959c;">库存数量：</view>
+							<view class="flex5" style="color:#96959c;">已过</view>
+							<view class="text-cut" style="color:#96959c;">基本单位：</view>
+							<view class="flex5" style="color:#96959c;">已开</view>
+						</view>		
+							<view class="left-text">
+								<view class="button-k">可用</view>
+							</view>
 					</view>
 				</view>
 			</view>
-		
-
-		</scroll-view>
+		</view>
 		<!--   回到首页箭头     -->
 		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal"></view>
+		
+		
 		<!--   筛选条件     -->
-	<scroll-view scroll-y class="DrawerWindow" :class="modalName=='viewModal'?'show':''">
+<scroll-view scroll-y class="DrawerWindow" :class="modalName=='viewModal'?'show':''">
 		<view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg">
 			<view class="bg-white pd10" style="overflow-y: auto;">
 				
-				<view class="commonView">
-					
-					
-					
-					
+				<view class="commonView">	
 					<view class="shaixuan-item-title " @click="deliveryClick">交货类型<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
 					<view class="item-mb9">
-						<view class='cu-tag radius cur chooseOne' >urgencyValue</view>
+						<view class='cu-tag radius cur' >urgencyValue</view>
 					</view>
 	
 					<view class="shaixuan-item-title margin-top" @click="sellClick">销售组织</view>
@@ -80,20 +84,31 @@
 							</view>
 						</view>
 					</view>
-					<view class="shaixuan-item-title margin-top" @click="dateClick" >创建日期
-					<view style="color: #f00; display: inline-block;">*</view>
-						<view class="item-mb9">
-							<view class='cu-tag radius cur chooseOne ' >111</view>
-							
+					
+					
+					
+				<view class=" margin-top"  >创建日期
+					<view class="item-mb9">
+						 	    <view class='cu-tag radius btnafter' @click="oneday">最近一天</view>
+							    <view class='cu-tag radius' @click="oneweek">最近一周</view>
+							    <view class='cu-tag radius' @click="onemonth">最近一月</view>
+						<view class="cu-form-group" >
+							    <picker class="data" mode="date"  @change="starDateClick">
+							        <view class="picker">
+							            {{date}}
+							        </view>
+							    </picker>
+							    <view class="polangxian">~</view>
+							    <picker class="data"  mode="date"   @change="endDateClick">
+							        <view class="picker">
+							            {{date1}}
+							        </view>
+							    </picker>
 						</view>
 					</view>
-						
-	
-				
-					
-					
-					
+				 </view>
 				</view>
+				
 				
 				
 				<view class="foot choosedBottom">
@@ -101,10 +116,7 @@
 					<button type="button" class="cu-btn round bg-blue lg" style="background-color: #47a4ff;"
 						@click="confirmClick">确定</button>
 				</view>
-				<chouti ref="childList" @getChildrenValue="getChildren" :serviceType="serviceTypeValue"
-										:delivery = "deliveryValue" :sell="sellValue" :distribution="distributionValue"
-				                        :status = "statusValue" :office = "officeValue" :date ="dateValue" 
-				></chouti>
+				<chouti ref="childList" @getChildrenValue="getChildren"></chouti>
 			</view>
 		</view>
 	</scroll-view>
@@ -129,6 +141,8 @@
 		},
 		data() {
 			return {
+				date:'',
+				date1:'',
 				//抽屉
 				serviceTypeValue:'',
 			    deliveryValue:'',
@@ -138,6 +152,8 @@
 				officeValue:'',
 				dateValue:'',
 				
+				dateText:[], //创建日期中被选择的
+				isDate:false,
 				
 				
 				
@@ -176,9 +192,142 @@
 				
 				}
 		},
+		created() {
+		    var nowDate = new Date();
+		    var cloneNowDate = new Date();
+		    var fullYear = nowDate.getFullYear();
+		    var month = nowDate.getMonth() + 1; // getMonth 方法返回 0-11，代表1-12月
+		    var endOfMonth = new Date(fullYear, month, 0).getDate(); // 获取本月最后一天
+		    function getFullDate(targetDate) {
+		        var D, y, m, d;
+		        if (targetDate) {
+		            D = new Date(targetDate);
+		            y = D.getFullYear();
+		            m = D.getMonth() + 1;
+		            d = D.getDate();
+		        } else {
+		            y = fullYear;
+		            m = month;
+		            d = date;
+		        }
+		        m = m > 9 ? m : '0' + m;
+		        d = d > 9 ? d : '0' + d;
+		        return y + '-' + m + '-' + d;
+		    };
 		
+		    var starDate = getFullDate(cloneNowDate.setDate(1));//当月第一天
+		    var endDate = getFullDate(cloneNowDate.setDate(endOfMonth));//当月最后一天
+		
+		    this.date = starDate
+		    this.date1 = endDate
+			
+			console.log(this.date)
+			
+		
+		},
 	
 		methods: {
+			oneday(){
+				 
+				     var nowdate = new Date();
+				            var y = nowdate.getFullYear();
+				            var m = nowdate.getMonth()+1;
+				            var d = nowdate.getDate();
+				     						m = m > 9 ? m : '0' + m;
+				     						d = d > 9 ? d : '0' + d;
+				            var formatnowdate = y+'-'+m+'-'+d;
+				     			
+				     var onedaydate = new Date(nowdate-24*3600*1000);
+				            var y = onedaydate.getFullYear();
+				            var m = onedaydate.getMonth()+1;
+				            var d = onedaydate.getDate();
+				     						m = m > 9 ? m : '0' + m;
+				     						d = d > 9 ? d : '0' + d;
+				            var formatwdate = y+'-'+m+'-'+d;
+				     						console.log(formatwdate)
+				     						this.date = formatwdate
+				     						this.date1 =formatnowdate
+				   
+
+				
+				
+			},
+			oneweek(){
+				  var nowdate = new Date();
+				        var y = nowdate.getFullYear();
+				        var m = nowdate.getMonth()+1;
+				        var d = nowdate.getDate();
+						m = m > 9 ? m : '0' + m;
+						d = d > 9 ? d : '0' + d;
+				        var formatnowdate = y+'-'+m+'-'+d;
+			
+				 var oneweekdate = new Date(nowdate-7*24*3600*1000);
+				        var y = oneweekdate.getFullYear();
+				        var m = oneweekdate.getMonth()+1;
+				        var d = oneweekdate.getDate();
+						m = m > 9 ? m : '0' + m;
+						d = d > 9 ? d : '0' + d;
+				        var formatwdate = y+'-'+m+'-'+d;
+						console.log(formatwdate)
+						this.date = formatwdate
+						this.date1 =formatnowdate
+					
+				    
+				
+			},
+			onemonth(){
+				var nowdate = new Date();
+				      var y = nowdate.getFullYear();
+				      var m = nowdate.getMonth()+1;
+				      var d = nowdate.getDate();
+					  m = m > 9 ? m : '0' + m;
+					  d = d > 9 ? d : '0' + d;
+				      var formatnowdate = y+'-'+m+'-'+d;
+					  
+				
+				 nowdate.setMonth(nowdate.getMonth()-1);
+				        var y = nowdate.getFullYear();
+				        var m = nowdate.getMonth()+1;
+				        var d = nowdate.getDate();
+						m = m > 9 ? m : '0' + m;
+						d = d > 9 ? d : '0' + d;
+				        var formatwdate = y+'-'+m+'-'+d;
+				        
+					this.date = formatwdate
+					this.date1 =formatnowdate
+				
+				
+				
+			},
+			
+			starDateClick(e) {
+				this.date = e.detail.value
+				var fomatTime = new RegExp(/-/g);
+				this.begin = parseInt(this.date.replace(fomatTime,""));
+				this.finish = parseInt(this.date1.replace(fomatTime,""));
+				if(this.begin > this.finish) {
+				    uni.showModal({
+				        content: "开始时间不能大于结束时间",
+				        showCancel: false,
+				        confirmText:'关闭',
+				    })
+				    return false;
+				}
+			},
+			endDateClick(e) {
+				this.date1 = e.detail.value
+				var fomatTime = new RegExp(/-/g);
+				this.begin = parseInt(this.date.replace(fomatTime,""));
+				this.finish = parseInt(this.date1.replace(fomatTime,""));
+				if(this.begin > this.finish) {
+				    uni.showModal({
+				        content: "开始时间不能大于结束时间",
+				        showCancel: false,
+				        confirmText:'关闭',
+				    })
+				    return false;
+				}
+			},
 			
 			
 			
@@ -192,60 +341,7 @@
 				this.getInfoList();
 			},
 			getInfoList(){
-				var serviceTypeArr = []
-				this.serviceTypeList.forEach(item => {
-					serviceTypeArr.push(item.value)
-				});
-				console.log(this.serviceTypeList)
-				
-				
-				
-				var data={}
-				let params = data;
-				let _this = this;
-				_this.$http.get("/o2m/bizz/amsSrMstr/list", {
-					params
-				}).then(res => {
-					if (res.data.code === 200) {
-						console.log("resdataresdata::::",res.data)
-						if (res.data) {
-							_this.queryData = _this.queryData.concat(res.data.result.records);
-							_this.queryData.forEach(item => {
-								if (item.createTime) {
-									var time = item.createTime.split(" ");
-									item.createTime = time[0];
-								}
-								if (item.epdtm) {
-									var time1 = item.epdtm.split(" ");
-									item.epdtm = time1[0];
-								}
-								if (item.prstm) {
-									var time2 = item.prstm.split(" ");
-									item.prstm = time2[0];
-								}
-								if (item.pretm) {
-									var time3 = item.pretm.split(" ");
-									item.pretm = time3[0];
-								}
-							})
-							if (res.data.result.records.length == 0) {
-								uni.showToast({
-									title: '无更多相关数据',
-									icon: 'none',
-									duration: 2000
-								});
-								_this.loadingModal = false;
-							}
-						}
-					} else {
-						uni.showModal({
-							content: res.data.message,
-							showCancel: false,
-							confirmText: '关闭',
-						})
-					}
-				})
-				
+			
 			},
 			showModal(e){
 				this.modalName = e.currentTarget.dataset.target
@@ -269,31 +365,41 @@
 			//点击销售组织
 			sellClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("sellClick");
+				this.$refs.childList.showChouTi("sell");
 			},
 			//点击分销渠道
 			distributionClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("distributionClick");
+				this.$refs.childList.showChouTi("distribution");
 			},
 			//点击发货状态
 			statusClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("statusClick");
+				this.$refs.childList.showChouTi("status");
 			},
 			//点击销售办事处
 			officeClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("officeClick");
+				this.$refs.childList.showChouTi("office");
 			},
 			//点击创建日期
 			dateClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("dateClick");
+				this.$refs.childList.showChouTi("date");
 			},
 			//子组件点击确定按钮时调用该方法
-			getChildren() {
-				console.log('从子组件传递过来的值：')
+			getChildren(data1,data2) {
+				console.log('从子组件传递过来的值：',data1,data2)
+				if (data1 == 'date') {
+					this.datelistArr = data2;
+					this.dateText = data2.text;
+					this.expectedtimeValue = data2.value;
+					if (data2.text != "") {
+						this.isDate = true
+					} else {
+						this.isDate = false
+					}
+				} 
 				
 			},
 			//点击筛选条件的取消按钮
@@ -333,9 +439,7 @@
 		background: white;
 		border-bottom: 1px solid #e7e7e7;
 	}
-    .content{
-		border-radius: 15px;
-	}
+
 	.cu-bar .search-form {
 		padding: 5px 10px;
 		height: 32px;
@@ -816,9 +920,7 @@
 		color: rgba(112, 112, 112, .9);
 		border: 1px solid rgba(112, 112, 112, 0.9);
 	}
-	.listContent{
-		border-radius: 15px;
-	}
+
 	.redStyle {
 		background-color: rgba(214, 77, 64, 0.1);
 		color: rgba(214, 77, 64, .9);
@@ -912,4 +1014,41 @@
 		top: 6px;
 		right: 15px;
 	}
+	.left-text{
+		margin-left: 150px;
+		margin-top: 35px;
+	}
+	.button-k{
+		border: 1px solid #07BB07;
+		width: 45px;
+		height: 30px;
+		color: #07BB07;
+		border-radius: 10px;
+		text-align: center;
+	}
+	
+	.cu-form-group{min-height: 30px;padding:0 10px;flex: 1;}
+	.cu-form-group uni-picker{flex: 0.68}
+	.cu-form-group uni-picker .picker{line-height: 30px;}
+	.cu-form-group uni-picker::after{line-height: 30px;top:1px;}
+	.pt10{padding-top:10px;}
+	
+	.cu-form-group uni-picker.data::after{display: none;}
+	.cu-form-group uni-picker.data{border:1px solid #ddd;padding:0;}
+	.cu-form-group uni-picker.data .picker{text-align: center;line-height: 30px;}
+	.polangxian{margin:0 5px;}
+	
+	.subtitle{font-weight: bold}
+	.ml150{margin-left:150px;}
+	.cu-form-group .title{padding-right:5px;}
+	
+	.cu-form-group{min-height: 45px;}
+	.cu-form-group uni-picker .picker{line-height: 45px;}
+	.cu-form-group uni-picker::after{line-height: 46px;}
+	.btnafter{
+		border: 1px solid #58a6f0;
+		background-color: #e5f1fd;
+	}
+	
+	
 </style>

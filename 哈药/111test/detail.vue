@@ -86,6 +86,44 @@
 </template>
 
 <script>
+	import {
+		http
+	} from '@/common/service/service.js'
+	
+	import chouti from "./component/chouti";
+	
+	//扫码功能需要：识别产品编码
+	import wx from 'weixin-js-sdk'
+	
+	export default {
+		name: 'operationsManageList',
+		components: {
+			chouti
+		},
+		data() {
+			return {
+				
+				
+				}
+		},
+		
+	
+		methods: {
+		
+		
+		goBack(){
+			uni.navigateTo({
+				url:'111test'
+			})
+			
+		}
+		
+			
+		
+			
+		}, //end of methods:
+	
+	}
 </script>
 
 <style scoped>

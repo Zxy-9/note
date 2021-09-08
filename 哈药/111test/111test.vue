@@ -16,16 +16,17 @@
 			</view>
 
 		</scroll-view>
-		<!--   回到首页箭头     -->
-		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal"></view>
+	
 		
 		<!-- 列表 -->
+		
+		
 		<view class="listCon">
 			<view class="cu-list menu">
-				<view class="cu-item"  
+				<view class="cu-item" style="border-radius: 10px;"  
 					@click="goDetail">
-					<view class="content flex">
-						<view class="text-black flex5 rigth-text">
+					<view class="content flex"  >
+						<view class="text-black flex5 ">
 							<view class="text-xl margin-bottom-sm">物料描述</view>
 							<view class="text-cut" style="color:#96959c;">库存地点：</view>
 							<view class="flex5" style="color:#96959c;">id</view>
@@ -33,19 +34,16 @@
 							<view class="flex5" style="color:#96959c;">已过</view>
 							<view class="text-cut" style="color:#96959c;">基本单位：</view>
 							<view class="flex5" style="color:#96959c;">已开</view>
-						</view>
-						<view class="left-text ">
-							<button class="cu-btn round lines-green myButton" >可用</button>
-						</view>
-						
+						</view>		
+							<view class="left-text">
+								<view class="button-k">可用</view>
+							</view>
 					</view>
 				</view>
-				
-			
 			</view>
-		
 		</view>
-		
+		<!--   回到首页箭头     -->
+		<view class="DrawerClose" :class="modalName=='viewModal'?'show':''" @tap="hideModal"></view>
 		
 		
 		<!--   筛选条件     -->
@@ -54,24 +52,24 @@
 			<view class="bg-white pd10" style="overflow-y: auto;">
 				
 				<view class="commonView">
-					<view class="shaixuan-item-title" @click="gochangClick">工厂<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
+					<view class="shaixuan-item-title" @click="factoryClick">工厂<view style="color: #f00;position: relative;top: 3px;margin-left: 3px;display: inline-block;">*</view></view>
 					<view class="item-mb9">
 						<view class='cu-tag radius cur'>45</view>
 					</view>
 	
-					<view class="shaixuan-item-title margin-top" @click="kucundidianClick">库存地点</view>
+					<view class="shaixuan-item-title margin-top" @click="siteClick">库存地点</view>
 					<view class="item-mb9">
 						<view class='cu-tag radius cur' >12 </view>
 					</view>
 	
-					<view class="shaixuan-item-title margin-top" @click="kucunleibieClick">库存类别</view>
+					<view class="shaixuan-item-title margin-top" @click="inventoryClick">库存状态</view>
 					<view class="item-mb9">
 						<view class='cu-tag radius cur' >
 							33
 						</view>
 					</view>
 	
-					<view class="shaixuan-item-title margin-top" @click="zhijianClick" >质检状态
+					<view class="shaixuan-item-title margin-top" @click="purClick" >采购组
 						<view class="item-mb9">
 							<view class='cu-tag radius cur' >
 								33
@@ -91,7 +89,7 @@
 					<button type="button" class="cu-btn round bg-blue lg" style="background-color: #47a4ff;"
 						@click="confirmClick">确定</button>
 				</view>
-				<chouti ref="childList"></chouti>
+				<chouti ref="childList" @getChildrenValue="getChildren"></chouti>
 			</view>
 		</view>
 	</scroll-view>
@@ -134,62 +132,30 @@
 			},
 			
 			//点击工厂
-			gochangClick() {
+			factoryClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("gongchanClick");
-			},
-			//点击库存类别
-			kucunleibieClick() {
-				console.log(this.$refs)
-				this.$refs.childList.showChouTi("kucunleibieClick");
+				this.$refs.childList.showChouTi("factory");
 			},
 			//点击库存地点
-			kucundidianClick() {
+			siteClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("kucundidianClick");
+				this.$refs.childList.showChouTi("site");
 			},
-			//点击质检状态
-			zhijianClick() {
+			//点击库存状态
+			inventoryClick() {
 				console.log(this.$refs)
-				this.$refs.childList.showChouTi("zhijianClick");
+				this.$refs.childList.showChouTi("inventory");
+			},
+			//点击采购组
+			purClick() {
+				console.log(this.$refs)
+				this.$refs.childList.showChouTi("pur");
 			},
 			//子组件点击确定按钮时调用该方法
 			getChildren(data1, data2) {
 				console.log('从子组件传递过来的值：', data1, data2)
 				if (data1 == 'serviceType') {
 					this.serviceTypeList = data2;
-				} else if (data1 == 'chooseDepartment') {
-					this.chooseDepartmentList = data2
-				} else if (data1 == 'reportingUser') {
-					this.reportingUserList = this.unique(data2);
-				} else if (data1 == 'reportingtime') {
-					this.reportingtimeText = data2.text;
-					this.reportingtimeValue = data2.value;
-					if (data2.text != "") {
-						this.isReportingTime = true
-					} else {
-						this.isReportingTime = false
-					}
-				} else if (data1 == 'expectedtime') {
-					this.expectedtimeText = data2.text;
-					this.expectedtimeValue = data2.value;
-					if (data2.text != "") {
-						this.isExpectedTime = true
-					} else {
-						this.isExpectedTime = false
-					}
-				} else if (data1 == 'systemmodule') {
-					this.systemModuleList = data2
-				} else if (data1 == 'operationperson') {
-					this.operationPersonList = data2
-				} else if (data1 == 'urgency') {
-					this.urgencyList = data2
-				} else if (data1 == 'demandstatus') {
-					this.demandStatusList = data2
-				} else if (data1 == 'approvalstatus') {
-					this.approvalStatusList = data2
-				} else if (data1 == 'cancelstatus') {
-					this.cancelStatusList = data2
 				}
 			},
 			//点击筛选条件的取消按钮
@@ -214,6 +180,11 @@
 				this.queryData = [];
 				this.list = [];
 				
+			},
+			goDetail(){
+				uni.navigateTo({
+					url:'detail'
+				})
 			},
 		}, //end of methods:
 	
@@ -808,8 +779,16 @@
 		right: 15px;
 	}
 	.left-text{
-		margin-left: 200px;
+		margin-left: 150px;
 		margin-top: 35px;
+	}
+	.button-k{
+		border: 1px solid #07BB07;
+		width: 45px;
+		height: 30px;
+		color: #07BB07;
+		border-radius: 10px;
+		text-align: center;
 	}
 	
 </style>

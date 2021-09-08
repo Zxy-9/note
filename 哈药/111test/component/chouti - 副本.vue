@@ -4,8 +4,6 @@
 			<view class="cu-dialog basis-lg" @tap.stop=""
 				:style="[{top:CustomBar +'px',height:'calc(100vh - ' + CustomBar + 'px)'}]">
 				<view class="cu-list menu text-left">
-					
-				
 					<!-- 服务类型 -->
 					<view class="choosedTitle">
 						<p><text class="cuIcon-newshot"></text><label>{{choosedTitle}}</label></p>
@@ -318,13 +316,6 @@
 			},
 			showChouTi(param, param2, param3) {
 				this.paramValue = param;
-				if (param == 'deliveryClick') {
-									
-									this.fuwuleixing = param2
-									console.log('交货类型:', this.fuwuleixing);
-									this.queryDeliveryList();
-									this.choosedTitle = "交货类型";
-								}
 				//服务类型
 				if (param == 'serviceType') {
 					//获取所有服务类型的列表

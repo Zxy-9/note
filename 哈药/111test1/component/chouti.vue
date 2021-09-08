@@ -33,14 +33,33 @@
 								<div class="duigou"></div>
 							</view>
 							<!-- 创建日期 -->
-							<view class="cu-item" :class="{current:dateCur[index]}" v-if="isOffice"
-									v-for=""
-									@click="chooseDateItem(index,item.text,item.value)">
-									<view class="dian">item.text</view>
-										<div class="duigou"></div>
+							<view class="cu-item" :class="{current:dateCur[index]}" v-if="isDate"
+									v-for="(item,index) in datelistArr"  @click="chooseDateItem(index,item)">
+											<view class="dian">最近一天</view>
+											<div class="duigou"></div>
+		
 									</view>
+								
+						<view class="cu-form-group" >
+						    <view class="title">选择时间</view>
+						    <picker class="data" mode="date"  @change="starDateClick">
+						        <view class="picker">
+						            {{date}}
+						        </view>
+						    </picker>
+						    <view class="polangxian">~</view>
+						    <picker class="data"  mode="date"   @change="endDateClick">
+						        <view class="picker">
+						            {{date1}}
+						        </view>
+						    </picker>
+						</view>
+												
+								
+					
 					
 				</view>
+				
 				<view style="width: 100%;height:48px;"></view>
 				<view class="confirmBtn">
 					<button type="button" class="cu-btn round bg-white lg" @click="cancelBtn">取消</button>
@@ -92,45 +111,147 @@
 				chooseddeliveryList:[],
 				
 				//销售组织
+				xiaoshouzuzhi:[],
+				sellUrl:"",
+				selllistArr:[],
+				sellChoosedCount:0,
+				sellChoosedArr:[],
+				isSell:false,
+				sellCur:[],
+				choosedsellList:[],
 				
 				//分销渠道
 				
 				//发货状态
+				fahuozhuangtai:[],
+				statusUrl:"",
+				StatuslistArr:[],
+				statusChoosedCount:0,
+				statusChoosedArr:[],
+				isStatus:false,
+				statusCur:[],
+				choosedstatusList:[],
 				
 				//销售办事处
+				xiaoshoubanshichu:[],
+				officeUrl:"",
+				officelistArr:[],
+				officeChoosedCount:0,
+				officeChoosedArr:[],
+				isOffice:false,
+				officeCur:[],
+				choosedofficeList:[],
 				
 				//创建日期
+				chuangjianriqi:[],
+				dateUrl:"/sys/dict/getDictItems/ams_tm_indays",
+				datelistArr:[],
+				dateChoosedCount:0,
+				dateChoosedArr:[],
+				isDate:false,
+				dateCur:[],
+				chooseddateList:[],
+				dateTimeChoosedItem: {
+					text: "",
+					value: ""
+				},
+				isChoosePiker:false, //日期选择器
+				date:'',
+				date1:""
 			};
+		},
+		created() {
+		    var nowDate = new Date();
+		    var cloneNowDate = new Date();
+		    var fullYear = nowDate.getFullYear();
+		    var month = nowDate.getMonth() + 1; // getMonth 方法返回 0-11，代表1-12月
+		    var endOfMonth = new Date(fullYear, month, 0).getDate(); // 获取本月最后一天
+		    function getFullDate(targetDate) {
+		        var D, y, m, d;
+		        if (targetDate) {
+		            D = new Date(targetDate);
+		            y = D.getFullYear();
+		            m = D.getMonth() + 1;
+		            d = D.getDate();
+		        } else {
+		            y = fullYear;
+		            m = month;
+		            d = date;
+		        }
+		        m = m > 9 ? m : '0' + m;
+		        d = d > 9 ? d : '0' + d;
+		        return y + '-' + m + '-' + d;
+		    };
+		
+		    var starDate = getFullDate(cloneNowDate.setDate(1));//当月第一天
+		    var endDate = getFullDate(cloneNowDate.setDate(endOfMonth));//当月最后一天
+		
+		    this.date = starDate
+		    this.date1 = endDate
+			
+			console.log(this.date)
+			
+		
 		},
 		
 
 		methods: {
-		
+			showDatePicker(){
+				console.log(111)
+				this.isChoosePiker = !this.isChoosePiker 
+				
+			},
+			starDateClick(e) {
+				this.date = e.detail.value
+				var fomatTime = new RegExp(/-/g);
+				this.begin = parseInt(this.date.replace(fomatTime,""));
+				this.finish = parseInt(this.date1.replace(fomatTime,""));
+				if(this.begin > this.finish) {
+				    uni.showModal({
+				        content: "开始时间不能大于结束时间",
+				        showCancel: false,
+				        confirmText:'关闭',
+				    })
+				    return false;
+				}
+			},
+			endDateClick(e) {
+				this.date1 = e.detail.value
+				var fomatTime = new RegExp(/-/g);
+				this.begin = parseInt(this.date.replace(fomatTime,""));
+				this.finish = parseInt(this.date1.replace(fomatTime,""));
+				if(this.begin > this.finish) {
+				    uni.showModal({
+				        content: "开始时间不能大于结束时间",
+				        showCancel: false,
+				        confirmText:'关闭',
+				    })
+				    return false;
+				}
+			},
 			
 		
 			showChouTi(param, param2, param3) {
 				this.paramValue = param;
 			
-			if(param == 'delivery'){
-				this.jiaohuoleixing =param2
-				console.log('jiaohuoleixing:',this.jiaohuoleixing);
-				this.queryDeliveryList()
-				this.choosedTitle="交货类型"
-				
-			
-			}
+							if(param == 'delivery'){
+								this.jiaohuoleixing =param2
+								console.log('交货类型:',this.jiaohuoleixing);
+								this.queryDeliveryList()
+								this.choosedTitle="交货类型"
+									}
 			//销售组织
 							if (param == 'sell') {
 								
-								this.fuwuleixing = param2
-								console.log('销售组织:', this.fuwuleixing);
+								this.xiaoshouzuzhi = param2
+								console.log('销售组织:', this.xiaoshouzuzhi);
 								this.querySellList();
 								this.choosedTitle = "销售组织";
 							}
 			//分销渠道
 							if (param == 'distribution') {
 							
-								this.fuwuleixing = param2
+								this.fenxiao = param2
 								console.log('分销渠道:', this.fuwuleixing);
 								this.queryDistributionList();
 								this.choosedTitle = "分销渠道";
@@ -139,14 +260,14 @@
 			//发货状态
 							if (param == 'status') {
 								
-								this.fuwuleixing = param2
+								this.fahuozhuangtai = param2
 								console.log('发货状态:', this.fuwuleixing);
 								this.queryStatusList();
 								this.choosedTitle = "发货状态";
 							}
 			//销售办事处
 							if (param == 'office') {
-								this.fuwuleixing = param2
+								this.xiaoshoubanshichu = param2
 								console.log('销售办事处:', this.fuwuleixing);
 								this.queryOfficeList();
 								this.choosedTitle = "销售办事处";
@@ -155,8 +276,8 @@
 							
 							if (param == 'date') {
 							
-								this.fuwuleixing = param2
-								console.log('创建日期:', this.fuwuleixing);
+								this.chuangjianriqi = param2
+								console.log('创建日期:', this.chuangjianriqi);
 								this.queryDateList();
 								this.choosedTitle = "创建日期";
 							}
@@ -168,26 +289,27 @@
 				this.modalName = null
 			},
 			
-			//获取交货类型列表
+					//获取交货类型列表
 			queryDeliveryList(){
-				let _this = this;
+						let _this = this;
 				
-				_this.$http.get(_this.deliveryUrl, {
-					params: {}
-				}).then(res => {
-					if (res.data.success) {
-						if (res.data) {
-							_this.DeliverylistArr = res.data.result
+						_this.$http.get(_this.deliveryUrl, {
+							params: {}
+						}).then(res => {
+							if (res.data.success) {
+								if (res.data) {
+									_this.DeliverylistArr = res.data.result
+							
 							console.log('交货类型：', _this.DeliverylistArr)
 							_this.isserviceType = false,
 							_this.isDelivery = true
 							
 							
-							_this.deliveryCur = [] //服务类型
+							_this.deliveryCur = [] 
 							_this.DeliverylistArr.forEach(index => {
 								_this.deliveryCur.push(false);
 								
-							})
+								})
 							for (var i = 0; i < _this.DeliverylistArr.length; i++) {
 								_this.chooseddeliveryList.push('');
 								for (var j = 0; j < _this.jiaohuoleixing.length; j++) {
@@ -215,7 +337,7 @@
 				
 				
 						}
-					} else {
+							} else {
 						this.DeliverylistArr = []
 						
 					
@@ -240,55 +362,83 @@
 			},
 			//获取创建日期
 			queryDateList(){
+				let _this = this;
+				_this.$http.get(_this.dateUrl, {
+					params: {}
+				}).then(res => {
+					if (res.data.success) {
+						_this.datelistArr = res.data.result
+						console.log('创建日期：', _this.datelistArr)
+						
+						
+						_this.isDelivery = false
+						_this.isSell = false,
+						_this.isStatus = false
+						_this.isDate = true 
+						
+						
+					}
+				})
 				
 			},
-	//点击交货类型
-	chooseDeliveryItem(index, item, value){
+			//点击交货类型
+			chooseDeliveryItem(index, item, value){
 		
-		this.$set(this.deliveryCur, index, !this.deliveryCur[index])
+				this.$set(this.deliveryCur, index, !this.deliveryCur[index])
 		
-		if (this.deliveryCur[index] == true) {
-			this.chooseddeliveryList.splice(index, 0, {
-				text: item,
-				value: value
-			});
-			this.chooseddeliveryList.splice(index + 1, 1); //移除原来位置上的该元素
-			this.deliveryChoosedCount++
+					if (this.deliveryCur[index] == true) {
+					this.chooseddeliveryList.splice(index, 0, {
+						text: item,
+						value: value
+					});
+					this.chooseddeliveryList.splice(index + 1, 1); //移除原来位置上的该元素
+					this.deliveryChoosedCount++
 		
-		} else if (this.deliveryCur [index] == false) {
-			this.chooseddeliveryList.splice(index, 0, ''); //index:元素需要放置的位置索引，从0开始
-			this.chooseddeliveryList.splice(index + 1, 1); //移除原来位置上的该元素
-			this.deliveryChoosedCount--
-		}
+				} else if (this.deliveryCur [index] == false) {
+					this.chooseddeliveryList.splice(index, 0, ''); //index:元素需要放置的位置索引，从0开始
+					this.chooseddeliveryList.splice(index + 1, 1); //移除原来位置上的该元素
+					this.deliveryChoosedCount--
+					}
 		
-	},
-	//点击销售组织
-	chooseSellItem(){
+			},
+				//点击销售组织
+					chooseSellItem(){
 		
-	},
-	//点击分销渠道
-	chooseDistributionItem(){
+				},
+				//点击分销渠道
+				chooseDistributionItem(){
 		
-	},
-	//点击发货状态
-	chooseStatusItem(){
+				},
+				//点击发货状态
+				chooseStatusItem(){
 		
-	},
-	//点击销售办事处
-	chooseOfficeItem(){
+				},
+				//点击销售办事处
+				chooseOfficeItem(){
 		
-	},
-	//点击创建日期
-	chooseDateItem(){
+				},
+		//点击创建日期
+			chooseDateItem(index,item){
+				this.dateCur = []
+				console.log("this.datelistArr1111",this.datelistArr)
+				for (var i = 0; i < this.datelistArr.length; i++) {
+					this.dateCur.push(false)
+				}
+				
+				this.$set(this.dateCur, index, !this.dateCur[index])
+				if (this.dateCur[index] == true) {
+					this.dateTimeChoosedItem.text = item.text
+					this.dateTimeChoosedItem.value = item.value
+				}
 		
-	},
-	//取消按钮
-	cancelBtn() {
-		this.modalName = null;
-		this.realname = '';
-		this.reportingUserListArr = [];
-		if (this.paramValue == 'reportingUser') {
-			if (this.arr.length > 0) {
+			},
+		//取消按钮
+			cancelBtn() {
+				this.modalName = null;
+				this.realname = '';
+				this.reportingUserListArr = [];
+				if (this.paramValue == 'reportingUser') {
+					if (this.arr.length > 0) {
 				let newArr = [];
 				for (let i = 0; i < this.choosedReportingUserList.length; i++) {
 					for (let j = 0; j < this.arr.length; j++) {
@@ -296,54 +446,46 @@
 							newArr.push(this.choosedReportingUserList[i]);
 						}
 					}
-				}
+					}
 				this.choosedReportingUserList = newArr;
 				this.reportingUserChoosedArr = [];
 				for (var i = 0; i < this.choosedReportingUserList.length; i++) {
 					if (this.choosedReportingUserList[i]) {
 						this.reportingUserChoosedArr.push(this.choosedReportingUserList[i])
+						}
 					}
-				}
 				this.$emit('getChildrenValue', 'reportingUser', this.reportingUserChoosedArr)
-			} else {
+					} else {
 				this.choosedReportingUserList = [];
 				this.reportingUserChoosedArr = this.choosedReportingUserList;
 				this.$emit('getChildrenValue', 'reportingUser', this.reportingUserChoosedArr)
-			}
-		}
-	},
-	//确认按钮
-	confirmBtn() {
-		this.modalName = null;
-		this.realname = '';
-		this.reportingUserListArr = [];
-		//服务类型
-		if (this.paramValue == 'delivery') {
-			this.deliveryChoosedArr = [];
-			for (var i = 0; i < this.chooseddeliveryList.length; i++) {
-				if (this.chooseddeliveryList[i]) {
-					this.deliveryChoosedArr.push(this.chooseddeliveryList[i])
+					}
 				}
-			}
-			console.log(chooseddeliveryList)
-			this.$emit('getChildrenValue', 'serviceType', this.deliveryChoosedArr)
-		}
+		},
+		//确认按钮
+			confirmBtn() {
+				
+				this.modalName = null;
+				this.realname = '';
+				this.reportingUserListArr = [];
+		
+			//期望完成
+				if (this.paramValue == 'date') {
+					this.$emit('getChildrenValue', 'date', this.dateTimeChoosedItem)
+					}
+			
+				}
 	
-	}
-	
-	
-	
-
 
 		},
-		onReachBottom() {
-			alert("1");
+			onReachBottom() {
+				alert("1");
 			if (this.pageStatus == 'nomore') return;
 			this.loadMoreData();
-		},
+			},
 		mounted() {
 			
-		}
+		 }
 	}
 </script>
 
@@ -504,4 +646,30 @@
 		height: auto;
 		line-height: 30px;
 	}
+	.cu-form-group+.cu-form-group{border-top: none;}
+	.cu-form-group{min-height: 30px;padding:0 10px;flex: 1;}
+	.cu-form-group uni-picker{flex: 0.68}
+	.cu-form-group uni-picker .picker{line-height: 30px;}
+	.cu-form-group uni-picker::after{line-height: 30px;top:1px;}
+	.pt10{padding-top:10px;}
+	.pb10{padding-bottom:10px;}
+	.cu-form-group uni-picker.data::after{display: none;}
+	.cu-form-group uni-picker.data{border:1px solid #ddd;padding:0;}
+	.cu-form-group uni-picker.data .picker{text-align: center;line-height: 30px;}
+	.polangxian{margin:0 5px;}
+	.cu-btn{height: 33px;}
+	.subtitle{font-weight: bold}
+	.ml150{margin-left:150px;}
+	.cu-form-group .title{padding-right:5px;}
+	
+	.cu-btn.lg{
+	    margin:7px 10px;
+	    height:32px;
+	    font-size: 15px;
+	}
+	.cu-form-group{min-height: 45px;}
+	.cu-form-group uni-picker .picker{line-height: 45px;}
+	.cu-form-group uni-picker::after{line-height: 46px;}
+	
+	
 </style>
