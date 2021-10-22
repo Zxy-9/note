@@ -21,10 +21,22 @@
         }
         //哈希查找
         var twosum1 = function(nums,target){
-                
+                const newMap = new Map()
+                for(let i=0;i<nums.length;i++){
+                    newMap.set(nums[i],i)
+                }       
+                for(let i=0;i<nums.length;i++){
+                    const x = target - nums[i]
+                    if(newMap.has(x) && i !== newMap.get(x) ){
+                        return [i,newMap.get(x)]
+                    }
+                }  
+
         }
+        console.log(twosum1(arr,4))
 
        console.log( twosum(4,arr))
+       
     </script>
 </body>
 </html>

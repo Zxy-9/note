@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+
+var str = "daskljahiagnaknscsjdwfanalvnahdpwod";
+
+function max(str) {
+  var o = {};
+  for (var i = 0; i < str.length; i++) {
+      // 循环遍历
+    var item = str.charAt(i);
+    if (o[item]) {
+      o[item]++;
+    } else {
+      o[item] = 1;
+    }
+  }
+  var max = 0; // 出现次数
+  // 标记出现次数最大字符
+  for (var key in o) {
+    if (max < o[key]) {
+      max = o[key];
+      var tmp;
+      tmp = key;
+    }
+  }
+  return tmp,max
+}
+console.log(max(str))
+
+      
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var isValid = function(s){
+            const mappings = new Map()
+            mappings.set("(",")")
+            mappings.set("{","}")
+            mappings.set("[","]")
+            const stack = []
+            for(let i=0;i<s.length;i++){
+                if(mappings.has(s[i])){
+                    stack.push(mappings.get(s[i]))
+                   
+                }else{
+                    if(stack.pop()!==s[i]){
+                        return false
+                    }
+                }
+
+            }
+            if(stack.length!=0){
+                return false
+            }else{
+                return true
+            }
+        }
+        //stack ]
+        console.log(isValid("[]"))
+        const map1 =new Map()
+        map1.set("(",")")
+            map1.set("{","}")
+            map1.set("[","]")
+            console.log(map1)
+            console.log("has)",map1.has(")"))
+            console.log(map1.get("["))
+            console.log(map1.set())
+
+
+    </script>
+</body>
+</html>

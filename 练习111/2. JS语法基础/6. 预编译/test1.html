@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+       table{
+           border-color: rgb(0, 153, 255);
+       }
+       
+        input{
+            margin-left: 10px;
+            margin-bottom: 10px;
+        }
+        .secth{
+            width: 1000px;
+            height: 35px;
+        }
+        select{
+            width: 60px;
+            margin-left: 10px;
+            height: 30px;
+        }
+        .pro{
+            width: 180px;
+            height: 30px;
+        }
+        .button{
+           margin-left: 400px;
+        }
+        textarea{
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="item">
+           <table border=1 cellspacing=0 cellpadding=1>
+        <tr><td>姓名：</td><td class="secth"> <input type="text"><span >*</span> </td>
+
+        <tr><td>性别：</td><td class="secth"> <input type="checkbox">男<input type="checkbox">女</td>
+
+        <tr><td>出生日期：</td><td class="secth"> <input type="text" style="width: 45px;"> 年<input type="text" style="width: 30px;" >月<input type="text"  style="width: 30px;">日</td>
+        
+        <tr><td>文明程度：</td><td class="secth"><select>
+            <option value ="volvo">高中</option>
+            <option value ="saab">初中</option>
+            <option value="opel">小学</option>
+            <option value="audi">大学</option>
+          </select></td>
+
+        <tr><td>所在省份：</td><td class="secth"><select>
+            <option value ="volvo">北京</option>
+            <option value ="saab">天津</option>
+            <option value="opel">重庆</option>
+            <option value="audi">上海</option>
+          </select></td>
+
+        <tr><td>联系地址：</td><td class="secth"> <input type="text"><span>*</span></td>
+
+            <tr><td>邮政编码：</td><td class="secth"> <input type="text"><span>*</span></td>
+                <tr><td>联系电话：</td><td class="secth"> <input type="text"><span>*</span></td>
+                    <tr><td>电子邮箱</td><td class="secth"> <input type="text"><span>*</span></td>
+                        <tr><td>类别：</td><td class="secth"><select>
+                            <option value ="volvo">函授</option>
+                            <option value ="saab">函授</option>
+                            <option value="opel">函授</option>
+                            <option value="audi">函授</option>
+                          </select></td>
+                            <tr><td>报考层次：</td><td class="secth"><select>
+                                <option value ="volvo">高级</option>
+                                <option value ="saab">初级</option>
+                                <option value="opel">中级</option>
+                              </select></td>
+                                <tr><td>报考专业：</td><td class="secth"><select class="pro">
+                                    <option value ="volvo">国家摄影师登记考评</option>
+                                    <option value ="saab">国家摄影师登记考评</option>
+                                    <option value="opel">国家摄影师登记考评</option>
+                                  </select></td>
+                                    <tr><td>备注：</td><td class="secth"> <textarea name="" id="" cols="120" rows="5" ></textarea> </td>
+                                        <tr><td></td><td class="secth">
+                                            <div class="button">
+                                                 <input type="submit" class="" value="提交" /><input class="" type="submit" value="重置" /></td>
+
+                                            </div>
+
+        </table>  
+        </div>
+        
+    </div>
+   
+</body>
+</html>

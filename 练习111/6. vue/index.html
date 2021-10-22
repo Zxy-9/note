@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="vue.min.js"></script>
+    <style>
+        button{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id='app'>
+        <ul>
+            <li  v-for='(item,index) in prouct'> {{item.name}}-------<button @click='add(item,item.id+1)'>+</button>{{item.id}}<button>-</button>
+            <button @click='remove(index)'>删除</button>
+            </li>
+        </ul>
+        <div>{{total}}</div>
+        
+        <div>
+            <btm></btm>
+        </div>
+    </div>
+    <script>
+        var btm = {
+            data(){
+                return {
+                    count:0
+                }
+            },
+            template:`<button>当前有{{count}}</button>`
+        }
+        
+        new Vue({
+            el:'#app',
+            data:{
+                prouct:[{name:'xiaomi',id:1},{name:'huawei',id:2},{name:'apple',id:3}],
+                
+            },
+            components:{
+                    btm
+            },
+            template:``,
+           
+            computed:{
+                total(){
+                    return this.prouct.reduce((a,b) => a + b.id,0)
+                }
+            },
+            methods:{
+                remove(index){
+                    console.log(index)
+                   this.prouct.splice(index,1)
+                },
+                add(pro,newid){
+                    if(newid > 10){
+                        newid = 10
+                        
+                    }
+                    pro.id = newid
+                }
+            }
+        })
+    </script>
+</body>
+</html>
