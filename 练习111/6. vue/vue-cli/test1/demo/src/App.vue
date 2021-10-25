@@ -1,20 +1,19 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
 
-    <Layout>
-      <template #layout-left>
-        <div>
+  
+
+        <div class="layout-right">
            <slider></slider>
         </div>
-      </template>
-      <template #layout-center>
+    
+     
         <div class="layout-center">
            <router-view>
-
            </router-view>
         </div>
-      </template>
-    </Layout>
+    
+  
 
 
    
@@ -52,22 +51,20 @@ export default {
 }
 </script>
 
-<style lang="less">
-.layout-container{
-    display: flex;
+<style lang="less" scoped>
+
+.container{
+  display: flex;
 }
-.layout-left{
-    width: 250px;
-    height: 100vh;
-    background: black;
+.layout-right{
+  flex: 0 0 250px;
+  height: 100vh;
+  position: fixed;
+  background-color: black;
 }
 .layout-center{
-    flex:1;
-    height: 100vh;
-    width: 100%;
-    
+  flex: 1;
 }
-
 
 
 

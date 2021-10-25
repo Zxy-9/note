@@ -77,7 +77,8 @@ export default {
 .pager-container {
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+
+ 
   a {
     color: @primary;
     margin: 0 6px;
@@ -93,4 +94,5 @@ export default {
     }
   }
 }
+
 </style>

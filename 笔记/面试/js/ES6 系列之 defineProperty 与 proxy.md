@@ -52,7 +52,7 @@ Object.defineProperty(obj, "num", {
 当且仅当该属性的 configurable 为 true 时，该属性描述符才能够被改变，也能够被删除。默认为 false。
 
 是否可以删除目标属性或是否可以再次修改属性的特性（writable, configurable, enumerable）。设置为true可以被删除或可以重新设置特性；设置为false，不能被可以被删除或不可以重新设置特性。默认为false。
-复制代码
+
 ```
 
 **enumerable**
@@ -61,7 +61,7 @@ Object.defineProperty(obj, "num", {
 当且仅当该属性的 enumerable 为 true 时，该属性才能够出现在对象的枚举属性中。默认为 false。
 
 是否可以被枚举（使用for...in或Object.keys()）。设置为true可以被枚举；设置为false，不能被枚举。默认为false。
-复制代码
+
 ```
 
 **数据描述符同时具有以下可选键值**：
@@ -70,14 +70,13 @@ Object.defineProperty(obj, "num", {
 
 ```
 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。默认为 undefined。
-复制代码
+
 ```
 
 **writable**
 
 ```
 当且仅当该属性的 writable 为 true 时，该属性才能被赋值运算符改变。默认为 false。
-复制代码
 ```
 
 **存取描述符同时具有以下可选键值**：
@@ -107,7 +106,6 @@ Object.defineProperty({}, "num", {
     enumerable: true,
     configurable: true
 });
-复制代码
 ```
 
 也可以：
@@ -124,7 +122,6 @@ Object.defineProperty({}, "num", {
     enumerable : true,
     configurable : true
 });
-复制代码
 ```
 
 但是不可以：

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     
+    </style>
+</head>
+<body>
+
+
+    <script>
+        //一共20枚金币，第1格放2枚，第2格放5枚，第3格放10枚，第4个格子原本需放17枚金币，
+        //但剩余金币只有3枚，因此只能放满3个格子，用去17枚金币，还剩3枚金币。
+       
+        function X(num){
+            
+           
+            var all = [2];
+            
+            for(let i=2;i<num;i++){
+                if(add(all)>num) break;
+                all.push(i*i+1)                               
+            }
+             all.pop()
+             const a = all.length
+             const b = num - add(all)
+             return a+' '+b
+
+        }
+        //console.log(X(1000))
+       function add(arr){
+           var number = 0;
+           for(let i =0;i<arr.length;i++){
+            number = number + arr[i]
+           }
+           return number
+       }
+      console.log(add([1,2,3,4,5,6,7,8,9,10]))
+   
+         
+    </script>
+</body>
+</html>

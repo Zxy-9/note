@@ -22,6 +22,9 @@ export default {
 </script>
 
 <style>
+.layout-left{
+    background-color: black;
+}
 
 
 </style>
